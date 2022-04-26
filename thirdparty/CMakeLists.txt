@@ -1,1 +1,0 @@
-add_subdirectory(raspicam EXCLUDE_FROM_ALL)
