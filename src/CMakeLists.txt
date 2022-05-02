@@ -15,8 +15,4 @@ SET(GCC_COVERAGE_LINK_FLAGS    "-unresolved-symbols=ignore-all")
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
 SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
-endif()
-
 add_subdirectory(firmware)

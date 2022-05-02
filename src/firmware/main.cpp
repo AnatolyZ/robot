@@ -1,36 +1,32 @@
-#include "../../thirdparty/raspicam/src/raspicam.h"
-#include <chrono>
+#include "Connection.hpp"
 #include <iostream>
-#include <filesystem>
-#include <fstream>
-#include <thread>
+#include <atomic>
+
+enum class Command
+{
+	Stop = 0,
+	Forward,
+	ForwardRight,
+	Right,
+	BackwardRight,
+	Backward,
+	BackwardLeft,
+	Left,
+	ForwardLeft,
+};
+
+
+void commandThread(std::atomic<Command>& command)
+{
+	(void) command;
+	while(true)
+	{
+
+	}
+}
 
 int main()
 {
-	raspicam::RaspiCam Camera; //Cmaera object
-	//Open camera
-	std::cout << "Opening Camera..." << std::endl;
-	if (!Camera.open())
-	{
-		std::cerr << "Error opening camera" << std::endl;
-		return -1;
-	}
-	//wait a while until camera stabilizes
-	std::cout << "Sleeping for 3 secs" << std::endl;
-	std::this_thread::sleep_for(std::chrono::seconds(3));
-	//capture
-	Camera.grab();
-	//allocate memory
-	unsigned char* data = new unsigned char[ Camera.getImageTypeSize ( raspicam::RASPICAM_FORMAT_RGB )];
-	//extract the image in rgb format
-	Camera.retrieve ( data,raspicam::RASPICAM_FORMAT_RGB );
-	//get camera image
-	//save
-	std::ofstream out_file ("raspicam_image.ppm", std::ios::binary);
-	out_file << "P6\n" << Camera.getWidth() << " " << Camera.getHeight() <<" 255\n";
-	out_file.write ( (char* ) data, Camera.getImageTypeSize ( raspicam::RASPICAM_FORMAT_RGB ) );
-	std::cout << "Image saved at raspicam_image.ppm" << std::endl;
-	//free resrources
-	delete[] data;
+	const auto conn = Connection::create("192.168.0.108", 55555);
 	return 0;
 }
